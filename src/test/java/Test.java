@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yyh.po.Student;
 import redis.clients.jedis.Jedis;
@@ -76,8 +77,8 @@ public class Test {
         ObjectMapper om = new ObjectMapper();
         //2.把json字符串转换为java对象
         try {
-            List<Student> student = om.readValue(student_1, new TypeReference<List<Student>>() {
-            });
+            JavaType javaType =om.getTypeFactory().constructParametricType(List.class,Student.class);
+            List<Student> student = om.readValue(student_1, javaType);
             for (Student student1 : student) {
                 System.out.println("student1 = " + student1);
             }
