@@ -2,6 +2,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yyh.dao.StudentDao;
+import com.yyh.dao.StudentDaoImpl;
 import com.yyh.po.Student;
 import redis.clients.jedis.Jedis;
 
@@ -85,5 +87,20 @@ public class Test {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    StudentDao  sd = new StudentDaoImpl();
+    @org.junit.Test
+    public void test1() {
+        Student student = new Student();
+        student.setStuId(1);
+        student.setStuName("张三");
+        student.setStuPwd("123456");
+        sd.insert(student);
+    }
+    @org.junit.Test
+    public void test2() {
+        Student student = sd.selectById(2);
+        System.out.println("student = " + student);
     }
 }
